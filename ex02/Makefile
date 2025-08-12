@@ -1,8 +1,8 @@
 NAME = a.out
 FLAGS = -Wall -Wextra -Werror -std=c++98
-FILES = main.cpp 
+FILES = main.cpp
 OBJ = $(FILES:.cpp=.o)
-HEADER = iter.hpp
+HEADER = Array.hpp
 
 all: $(NAME)
 
