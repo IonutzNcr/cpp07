@@ -8,52 +8,64 @@ template <class T>
 class Array
 {
     public:
-        Array():_size(5)
+        Array():_size(0)
         {
-            arr = new T[5];
+            arr = NULL;
         }
-        Array(unisgned int n) :_size(n)
+        Array(unsigned int n) :_size(n)
         {
-            arr = new T[n];
-            for(int i = 0; i < n; i++)
-                arr[i] = 0;
+            if (n)
+                arr = new T[n]();
+            else
+                arr = NULL;
+            
         }
-        class OutOfBoundException()
+        class OutOfBoundException : public std::exception
         {
-            const char *what() throw(){
-                std::cout << "Out of bounds" ;
-            }
-        }
-        Array(Array<T> &src){
+            public:
+                const char *what() const throw(){
+                    return ("Out of bounds") ;
+                }
+        };
+        Array(Array &src){
             if (src != *this)
             {
                 arr = new T[src._size];
-                _size = src._size
-                for (i = 0; i < _size; i++)
+                _size = src._size;
+                for (int i = 0; i < _size; i++)
                     arr[i] = src.arr[i];
             }
+            return *this;
         }
-        operator=(Array &rhs){
+        Array& operator=(Array &rhs){
             if (rhs != *this)
             {
-                delete arr[];
+                delete[] arr;
                 arr = new T[rhs._size];
                 _size = rhs._size
-                for (i = 0; i < _size; i++)
+                for (int i = 0; i < _size; i++)
                     arr[i] = rhs.arr[i];
             }
         }
-        operator[]( unsigned int x)
+        T& operator[]( unsigned int x)
         {
-            if (x >= size)
+            if (x >= _size || x < 0)
+                throw OutOfBoundException();
+            return (arr[x]);
+        }
+
+        const T& operator[]( unsigned int x) const
+        {
+            if (x >= _size)
                 throw OutOfBoundExceptin();
             return (arr[x]);
         }
 
+
         ~Array(){
-            delete arr[];
+            delete[] arr;
         }
-        size(){
+        unsigned int size() const {
             return (_size);
         }
     private:
