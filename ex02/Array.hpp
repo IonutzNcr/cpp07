@@ -2,7 +2,6 @@
 #define ARRAY_HPP
 
 #include <exception>
-#include <iostream>
 
 template <class T>
 class Array
@@ -27,29 +26,45 @@ class Array
                     return ("Out of bounds") ;
                 }
         };
-        Array(Array &src){
-            if (src != *this)
+        Array(Array const &src){
+            if (&src != this)
             {
-                arr = new T[src._size];
-                _size = src._size;
-                for (int i = 0; i < _size; i++)
-                    arr[i] = src.arr[i];
+                if (!src._size)
+                {
+                    _size = src._size;
+                    arr = NULL;
+                }
+                else{
+                    arr = new T[src._size];
+                    _size = src._size;
+                    for (unsigned int i = 0; i < _size; i++)
+                        arr[i] = src.arr[i];
+                }
+            }
+        }
+        Array& operator=(Array const &rhs){
+            if (&rhs != this)
+            {
+                if (_size)
+                    delete[] arr;
+                if (!rhs._size)
+                {
+                    arr = NULL;
+                    _size = rhs._size;
+                }
+                else
+                {
+                    arr = new T[rhs._size];
+                    _size = rhs._size;
+                    for (unsigned int i = 0; i < _size; i++)
+                        arr[i] = rhs.arr[i];
+                }
             }
             return *this;
         }
-        Array& operator=(Array &rhs){
-            if (rhs != *this)
-            {
-                delete[] arr;
-                arr = new T[rhs._size];
-                _size = rhs._size
-                for (int i = 0; i < _size; i++)
-                    arr[i] = rhs.arr[i];
-            }
-        }
         T& operator[]( unsigned int x)
         {
-            if (x >= _size || x < 0)
+            if (x >= _size )
                 throw OutOfBoundException();
             return (arr[x]);
         }
@@ -57,7 +72,7 @@ class Array
         const T& operator[]( unsigned int x) const
         {
             if (x >= _size)
-                throw OutOfBoundExceptin();
+                throw OutOfBoundException();
             return (arr[x]);
         }
 
