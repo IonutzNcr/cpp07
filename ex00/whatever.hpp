@@ -1,7 +1,6 @@
 #ifndef WHATEVER_HPP
 #define WHATEVER_HPP
 
-
 template <class validType>
 void swap(validType &a, validType &b)
 {
@@ -18,6 +17,7 @@ T min(T a, T b)
     else 
         return (b);
 }
+
 template <class T>
 T max(T a, T b)
 {

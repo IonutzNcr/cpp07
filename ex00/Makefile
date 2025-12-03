@@ -1,4 +1,4 @@
-NAME = a.aout
+NAME = a.out
 FLAGS = -Wall -Wextra -Werror -std=c++98
 FILES = main.cpp 
 OBJ = $(FILES:.cpp=.o)
