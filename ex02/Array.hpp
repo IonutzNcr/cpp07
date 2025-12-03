@@ -16,8 +16,7 @@ class Array
             if (n)
                 arr = new T[n]();
             else
-                arr = NULL;
-            
+                arr = NULL; 
         }
         class OutOfBoundException : public std::exception
         {

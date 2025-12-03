@@ -1,17 +1,27 @@
 #include <iostream>
 #include "Array.hpp"
 
-int main() {
+int main(void) {
     try {
         std::cout << "=== Default constructor ===" << std::endl;
         Array<int> a;
         std::cout << "Size: " << a.size() << std::endl;
 
+        std::cout << "\n=== Accessing dock ===" << std::endl;
+        int * dock = new int();
+        std::cout << *dock << std::endl;
+        delete dock;
+
         std::cout << "\n=== Constructor with size ===" << std::endl;
         Array<int> b(5);
+        std::cout << "\n=== Printing actual elements" << "\n";
         std::cout << "Size: " << b.size() << std::endl;
         for (unsigned int i = 0; i < b.size(); ++i) {
-            b[i] = i * 10;
+            std::cout << "b[" << i << "] = " << b[i] << std::endl;
+        }
+        std::cout << "\n=== Modifying elements" << "\n";
+        for (unsigned int i = 0; i < b.size(); ++i) {
+            b[i] = i * 10; 
             std::cout << "b[" << i << "] = " << b[i] << std::endl;
         }
 
@@ -37,12 +47,12 @@ int main() {
 
         std::cout << "\n=== Out-of-bounds test ===" << std::endl;
         std::cout << "Trying to access index 10 in array of size " << b.size() << std::endl;
-        std::cout << b[10] << std::endl; // Should throw
+        std::cout << b[10] << std::endl;
 
-    } catch (const Array<int>::OutOfBoundException &ex) {
-        std::cerr << "Caught Array<int>::OutOfBoundException: " << ex.what() << std::endl;
-    } catch (const std::exception &ex) {
-        std::cerr << "Caught std::exception: " << ex.what() << std::endl;
+    } catch (const Array<int>::OutOfBoundException &err) {
+        std::cerr << err.what() << std::endl;
+    } catch (const std::exception &err) {
+        std::cerr << "Caught std::exception: " << err.what() << std::endl;
     }
 
      try {
@@ -64,7 +74,7 @@ int main() {
         std::cout << "letters[0] = " << letters[0] << " (should be unchanged)" << std::endl;
 
         std::cout << "\n=== Out-of-bounds test (char) ===" << std::endl;
-        std::cout << letters[10] << std::endl; // Should throw
+        std::cout << letters[10] << std::endl;
 
     } catch (const Array<char>::OutOfBoundException &ex) {
         std::cerr << "Caught Array<char>::OutOfBoundException: " << ex.what() << std::endl;
